@@ -1,461 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-  <title>🩸</title>
+<meta charset="UTF-8">
+<title>diário</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial;
-      background: #0f0f0f;
-      color: white;
-      text-align: center;
-    }
+<style>
+  body {
+    margin: 0;
+    background: #0f0f0f;
+    color: #eaeaea;
+    font-family: Arial;
+    overflow: hidden;
+  }
 
-    .tela-login {
-      display: flex;
-      height: 100vh;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
+  .container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
 
-    input {
-      padding: 10px;
-      margin: 10px;
-      border-radius: 8px;
-      border: none;
-    }
+  .foto {
+    width: 200px;
+    height: 200px;
+    background: url('https://via.placeholder.com/200') center/cover;
+    filter: grayscale(80%);
+    cursor: pointer;
+  }
 
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      background: #ff4da6;
-      color: white;
-      cursor: pointer;
-    }
+  .texto {
+    margin-top: 20px;
+    opacity: 0.8;
+  }
 
-    .conteudo {
-      display: none;
-      padding: 30px;
-    }
+  /* hotspot invisível */
+  .segredo {
+    position: absolute;
+    top: 30%;
+    left: 60%;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+  }
 
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      justify-content: center;
-      align-items: center;
-    }
+  .hidden {
+    display: none;
+  }
 
-    .caixa {
-      background: #111;
-      padding: 20px;
-      border-radius: 16px;
-      width: 80%;
-      max-width: 700px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .fechar {
-      position: absolute;
-      right: 15px;
-      top: 10px;
-      cursor: pointer;
-      font-size: 22px;
-    }
-
-    .carrossel {
-      display: flex;
-      transition: transform 0.5s ease;
-    }
-
-    .paused {
-      filter: blur(2px);
-    }
-
-    .foto {
-      min-width: 100%;
-      padding: 10px;
-      box-sizing: border-box;
-    }
-
-    .polaroid {
-      background: white;
-      color: black;
-      padding: 10px 10px 20px;
-      border-radius: 10px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-    }
-
-    .polaroid img {
-      width: 100%;
-      border-radius: 8px;
-    }
-
-    .data {
-      font-size: 13px;
-      margin-top: 8px;
-    }
-
-    .descricao {
-      margin-top: 8px;
-      font-size: 14px;
-      font-style: italic;
-      min-height: 20px;
-    }
-
-    .seta {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 28px;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .esq { left: 10px; }
-    .dir { right: 10px; }
-
-    #status {
-      color: #ff4da6;
-      font-weight: bold;
-    }
-
-    #timer {
-      opacity: 0.7;
-      font-size: 13px;
-    }
-  </style>
+</style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div class="tela-login">
-  <h2> só você pode entrar...se conseguir ;b</h2>
-  <input type="password" id="senha" placeholder="senha...">
-  <button onclick="entrar()">entrar</button>
-  <p id="erro"></p>
+<div class="container">
+  <div class="foto" onclick="revelar()"></div>
+  <div class="texto">não tem nada aqui. sério.</div>
 </div>
 
-<!-- CONTEÚDO -->
-<div class="conteudo" id="site">
+<div class="segredo" onclick="abrirSegredo()"></div>
 
-  <h1>feliz aniversário mamaim🎂</h1>
-
-  <button onclick="abrir()">abrir memórias</button>
-
-  <h2>pra você</h2>
-  <p>antes das memórias… duas fotos importantes (ou não)</p>
-
-  <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
-    <div class="polaroid">
-      <img src="https://i.imgur.com/uG1Yb0g.png">
-      <div class="data">lindeza 1</div>
-    </div>
-
-    <div class="polaroid">
-      <img src="https://i.imgur.com/BUvrAzW.jpeg">
-      <div class="data">lindeza 2</div>
-    </div>
-  </div>
-
-  <br><br>
-
-  <button onclick="mostrarMsg()">mensagem secreta</button>
-  <p id="msg2" style="display:none; margin-top:10px;"></p>
-  <button id="btnExtra" onclick="alert('sabia que tu ia clicar 🤨💗')" 
-style="display:none; margin-top:10px;">
-  ok… agora clica aqui também
-</button>
-
+<div id="arquivo" class="hidden">
+  <h2>VOCÊ NÃO ERA PRA TER CHEGADO AQUI</h2>
+  <p>30/04 — registro corrompido</p>
 </div>
-
-<!-- MODAL -->
-<div class="modal" id="modal">
-
-  <div class="caixa">
-
-    <span class="fechar" onclick="fechar()">×</span>
-
-    <h2>📸 memórias</h2>
-
-    <div id="status">▶ PLAYING</div>
-    <div id="timer">tempo: 0s</div>
-
-    <div class="seta esq" onclick="voltar()">‹</div>
-    <div class="seta dir" onclick="avancar()">›</div>
-
-    <div class="carrossel" id="carrossel">
-
-      <div class="foto">
-        <div class="polaroid">
-          <img src="https://i.imgur.com/qrqDbf6.jpeg">
-          <div class="data">XX/XX/XXXX</div>
-          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
-        </div>
-      </div>
-
-      <div class="foto">
-        <div class="polaroid">
-          <img src="https://i.imgur.com/uf5jXUq.jpeg">
-          <div class="data">XX/XX/XXXX</div>
-          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
-        </div>
-      </div>
-
-            <div class="foto">
-        <div class="polaroid">
-          <img src="https://i.imgur.com/JejIDFM.jpeg">
-          <div class="data">XX/XX/XXXX</div>
-          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
-        </div>
-      </div>
-
-      <div class="foto">
-        <div class="polaroid">
-          <img src="https://i.imgur.com/ZwTaOfS.jpeg">
-          <div class="data">XX/XX/XXXX</div>
-          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
-        </div>
-      </div>
-
-            <div class="foto">
-        <div class="polaroid">
-          <img src="https://i.imgur.com/fNo9fMD.jpeg">
-          <div class="data">XX/XX/XXXX</div>
-          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
-        </div>
-      </div>
-
-      <div class="foto">
-        <div class="polaroid">
-          <img src="https://i.imgur.com/6GHpaYH.jpeg">
-          <div class="data">XX/XX/XXXX</div>
-          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
-        </div>
-      </div>
-
-            <div class="foto">
-        <div class="polaroid">
-          <img src="https://i.imgur.com/LSgZ1PW.jpeg">
-          <div class="data">XX/XX/XXXX</div>
-          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
-        </div>
-      </div>
-
-            <div class="foto">
-        <div class="polaroid">
-          <img src="https://i.imgur.com/i7HlWfy.jpeg">
-          <div class="data">XX/XX/XXXX</div>
-          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
-        </div>
-      </div>
-
-      <div class="foto">
-        <div class="polaroid">
-          <img src="https://i.imgur.com/ybgL46D.jpeg">
-          <div class="data">XX/XX/XXXX</div>
-          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ÁUDIO -->
-<audio id="camera-sound" preload="auto">
-  <source src="https://www.soundjay.com/mechanical/camera-shutter-click-01.mp3">
-</audio>
-
-<audio id="musica" loop>
-  <source src="https://files.catbox.moe/3vgiy3.mp3" type="audio/mpeg">
-</audio>
 
 <script>
-
-let index = 0;
-let autoPlay = null;
-let pausado = false;
-let tempo = 0;
-let timerInterval = null;
-
-/* LOGIN */
-function entrar() {
-  const senha = document.getElementById("senha").value;
-
-  if (senha === "29/12") {
-    document.querySelector(".tela-login").style.display = "none";
-    document.getElementById("site").style.display = "block";
-
-    const musica = document.getElementById("musica");
-    musica.volume = 0.4;
-
-musica.muted = true;
-musica.play().then(() => {
-  musica.pause();
-  musica.currentTime = 0;
-  musica.muted = false;
-}).catch(()=>{});
-
-  } else {
-    document.getElementById("erro").innerText = "senha errada 😡";
-  }
+function revelar() {
+  document.body.style.background = "#000";
+  alert("algo mudou.");
 }
 
-/* MENSAGEM */
-function mostrarMsg() {
-  const el = document.getElementById("msg2");
-  const btn = document.getElementById("btnExtra");
-
-  const visivel = el.style.display === "block";
-
-  el.style.display = visivel ? "none" : "block";
-  btn.style.display = visivel ? "none" : "inline-block";
-
-  if (!visivel) {
-    el.innerText = "mereço um sushizinho pelo esforço, né?";
-  }
+function abrirSegredo() {
+  document.getElementById("arquivo").classList.remove("hidden");
 }
-
-/* ABRIR MODAL */
-function abrir() {
-  document.getElementById("modal").style.display = "flex";
-
-  const musica = document.getElementById("musica");
-  musica.play().catch(()=>{});
-
-  pausado = false;
-  atualizarStatus();
-
-  iniciarTimer();
-
-  clearInterval(autoPlay);
- autoPlay = setInterval(() => {
-  if (!pausado) {
-    avancar();
-  }
-}, 5000);
-
-  atualizar();
-}
-
-/* FECHAR */
-function fechar() {
-  document.getElementById("modal").style.display = "none";
-
-  clearInterval(autoPlay);
-  clearInterval(timerInterval);
-}
-
-/* CARROSSEL */
-function atualizar() {
-  const carrossel = document.getElementById("carrossel");
-  carrossel.style.transform = `translateX(${-index * 100}%)`;
-
-  setTimeout(ativarTexto, 300);
-}
-
-function avancar() {
-  const total = document.querySelectorAll(".foto").length;
-  index = (index + 1) % total;
-  atualizar();
-}
-
-function voltar() {
-  const total = document.querySelectorAll(".foto").length;
-  index = (index - 1 + total) % total;
-  atualizar();
-}
-
-/* TEXTO */
-function escrever(el, text, i = 0) {
-  el.innerHTML = "";
-  function loop() {
-    if (i < text.length) {
-      el.innerHTML += text[i++];
-      setTimeout(loop, 30);
-    }
-  }
-  loop();
-}
-
-function ativarTexto() {
-  const fotos = document.querySelectorAll(".foto");
-  const atual = fotos[index];
-  const desc = atual.querySelector(".descricao");
-  escrever(desc, desc.getAttribute("data-text"));
-}
-
-/* TIMER */
-function iniciarTimer() {
-  tempo = 0;
-
-  clearInterval(timerInterval);
-  timerInterval = setInterval(() => {
-    if (!pausado) {
-      tempo++;
-      document.getElementById("timer").innerText = "tempo: " + tempo + "s";
-    }
-  }, 1000);
-}
-
-/* STATUS */
-function atualizarStatus() {
-  const status = document.getElementById("status");
-  const carrossel = document.getElementById("carrossel");
-
-  if (pausado) {
-    status.innerText = "⏸ PAUSED";
-    carrossel.classList.add("paused");
-  } else {
-    status.innerText = "▶ PLAYING";
-    carrossel.classList.remove("paused");
-  }
-}
-
-/* PAUSE */
-function togglePause() {
-  const sound = document.getElementById("camera-sound");
-  const musica = document.getElementById("musica");
-
-  sound.currentTime = 0;
-sound.volume = 1;
-sound.play().catch(()=>{});
-
-  pausado = !pausado;
-
-  if (pausado) {
-    musica.pause();
-  } else {
-    musica.play().catch(()=>{});
-  }
-
-  atualizarStatus();
-}
-
-/* CLICK */
-window.addEventListener("load", () => {
-  document.getElementById("modal").addEventListener("click", (e) => {
-    if (!e.target.classList.contains("seta") && 
-        !e.target.classList.contains("fechar")) {
-      togglePause();
-    }
-  });
-});
-/* TECLA ESPAÇO */
-document.addEventListener("keydown", (e) => {
-  if (e.code === "Space") {
-    e.preventDefault();
-    togglePause();
-  }
-});
-
 </script>
 
 </body>
