@@ -48,12 +48,6 @@
       background: rgba(0,0,0,0.85);
       justify-content: center;
       align-items: center;
-      animation: fadeIn 0.6s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
     }
 
     .caixa {
@@ -100,15 +94,18 @@
     .polaroid img {
       width: 100%;
       border-radius: 8px;
-      transition: transform 5s ease;
     }
 
-    .foto.ativa img {
-      transform: scale(1.08);
+    .data {
+      font-size: 13px;
+      margin-top: 8px;
     }
 
-    .dots {
-      margin-top: 10px;
+    .descricao {
+      margin-top: 8px;
+      font-size: 14px;
+      font-style: italic;
+      min-height: 20px;
     }
 
     .seta {
@@ -117,6 +114,7 @@
       transform: translateY(-50%);
       font-size: 28px;
       cursor: pointer;
+      user-select: none;
     }
 
     .esq { left: 10px; }
@@ -136,49 +134,48 @@
 
 <body>
 
+<!-- LOGIN -->
 <div class="tela-login">
-  <h2>só você pode entrar...se conseguir ;b</h2>
-  <input type="password" id="senha">
+  <h2> só você pode entrar...se conseguir ;b</h2>
+  <input type="password" id="senha" placeholder="senha...">
   <button onclick="entrar()">entrar</button>
   <p id="erro"></p>
 </div>
 
+<!-- CONTEÚDO -->
 <div class="conteudo" id="site">
 
   <h1>feliz aniversário mamaim🎂</h1>
 
   <button onclick="abrir()">abrir memórias</button>
 
-  <h3 id="contador"></h3>
+  <h2>pra você</h2>
+  <p>antes das memórias… duas fotos importantes (ou não)</p>
 
-  <br>
+  <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+    <div class="polaroid">
+      <img src="https://i.imgur.com/uG1Yb0g.png">
+      <div class="data">lindeza 1</div>
+    </div>
 
-  <button onclick="abrirVideo()">assista isso quando estiver sozinha👀</button>
-
-  <div id="videoBox" style="display:none;">
-    <video width="80%" controls>
-      <source src="https://i.imgur.com/1h9wuml.mp4">
-    </video>
+    <div class="polaroid">
+      <img src="https://i.imgur.com/BUvrAzW.jpeg">
+      <div class="data">lindeza 2</div>
+    </div>
   </div>
 
-  <br>
+  <br><br>
 
   <button onclick="mostrarMsg()">mensagem secreta</button>
-  <p id="msg2" style="display:none;"></p>
-
-  <button onclick="mensagemSeria()">ok… agora é sério</button>
-
-  <p id="msgSeria" style="display:none; max-width:500px; margin:auto;">
-    obrigada por tudo que você faz por mim… eu lembro de tudo, até das coisas pequenas. te amo muito.
-  </p>
-
-  <br>
-
-  <button onclick="ultima()">clica aqui… confia</button>
-  <div id="final" style="display:none; font-size:20px;">💗💗💗</div>
+  <p id="msg2" style="display:none; margin-top:10px;"></p>
+  <button id="btnExtra" onclick="alert('sabia que tu ia clicar 🤨💗')" 
+style="display:none; margin-top:10px;">
+  ok… agora clica aqui também
+</button>
 
 </div>
 
+<!-- MODAL -->
 <div class="modal" id="modal">
 
   <div class="caixa">
@@ -195,39 +192,97 @@
 
     <div class="carrossel" id="carrossel">
 
-      <!-- SUAS FOTOS (mantidas) -->
-      <div class="foto"><div class="polaroid"><img src="https://i.imgur.com/qrqDbf6.jpeg"></div></div>
-      <div class="foto"><div class="polaroid"><img src="https://i.imgur.com/uf5jXUq.jpeg"></div></div>
-      <div class="foto"><div class="polaroid"><img src="https://i.imgur.com/JejIDFM.jpeg"></div></div>
-      <div class="foto"><div class="polaroid"><img src="https://i.imgur.com/ZwTaOfS.jpeg"></div></div>
-      <div class="foto"><div class="polaroid"><img src="https://i.imgur.com/fNo9fMD.jpeg"></div></div>
-      <div class="foto"><div class="polaroid"><img src="https://i.imgur.com/6GHpaYH.jpeg"></div></div>
-      <div class="foto"><div class="polaroid"><img src="https://i.imgur.com/LSgZ1PW.jpeg"></div></div>
-      <div class="foto"><div class="polaroid"><img src="https://i.imgur.com/i7HlWfy.jpeg"></div></div>
-      <div class="foto"><div class="polaroid"><img src="https://i.imgur.com/ybgL46D.jpeg"></div></div>
+      <div class="foto">
+        <div class="polaroid">
+          <img src="https://i.imgur.com/qrqDbf6.jpeg">
+          <div class="data">XX/XX/XXXX</div>
+          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
+        </div>
+      </div>
+
+      <div class="foto">
+        <div class="polaroid">
+          <img src="https://i.imgur.com/uf5jXUq.jpeg">
+          <div class="data">XX/XX/XXXX</div>
+          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
+        </div>
+      </div>
+
+            <div class="foto">
+        <div class="polaroid">
+          <img src="https://i.imgur.com/JejIDFM.jpeg">
+          <div class="data">XX/XX/XXXX</div>
+          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
+        </div>
+      </div>
+
+      <div class="foto">
+        <div class="polaroid">
+          <img src="https://i.imgur.com/ZwTaOfS.jpeg">
+          <div class="data">XX/XX/XXXX</div>
+          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
+        </div>
+      </div>
+
+            <div class="foto">
+        <div class="polaroid">
+          <img src="https://i.imgur.com/fNo9fMD.jpeg">
+          <div class="data">XX/XX/XXXX</div>
+          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
+        </div>
+      </div>
+
+      <div class="foto">
+        <div class="polaroid">
+          <img src="https://i.imgur.com/6GHpaYH.jpeg">
+          <div class="data">XX/XX/XXXX</div>
+          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
+        </div>
+      </div>
+
+            <div class="foto">
+        <div class="polaroid">
+          <img src="https://i.imgur.com/LSgZ1PW.jpeg">
+          <div class="data">XX/XX/XXXX</div>
+          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
+        </div>
+      </div>
+
+            <div class="foto">
+        <div class="polaroid">
+          <img src="https://i.imgur.com/i7HlWfy.jpeg">
+          <div class="data">XX/XX/XXXX</div>
+          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
+        </div>
+      </div>
+
+      <div class="foto">
+        <div class="polaroid">
+          <img src="https://i.imgur.com/ybgL46D.jpeg">
+          <div class="data">XX/XX/XXXX</div>
+          <div class="descricao" data-text="XXXXX XX XXXXX XXX XXXXXXX"></div>
+        </div>
+      </div>
 
     </div>
-
-    <div class="dots" id="dots"></div>
-
   </div>
 </div>
 
-<audio id="camera-sound">
+<!-- ÁUDIO -->
+<audio id="camera-sound" preload="auto">
   <source src="https://www.soundjay.com/mechanical/camera-shutter-click-01.mp3">
 </audio>
 
 <audio id="musica" loop>
-  <source src="https://files.catbox.moe/3vgiy3.mp3">
+  <source src="https://files.catbox.moe/3vgiy3.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
 let index = 0;
+let autoPlay = null;
 let pausado = false;
 let tempo = 0;
-let tentativas = 0;
-let autoPlay = null;
 let timerInterval = null;
 
 /* LOGIN */
@@ -237,45 +292,38 @@ function entrar() {
   if (senha === "29/12") {
     document.querySelector(".tela-login").style.display = "none";
     document.getElementById("site").style.display = "block";
-    atualizarContador();
+
+    const musica = document.getElementById("musica");
+    musica.volume = 0.4;
+
+musica.muted = true;
+musica.play().then(() => {
+  musica.pause();
+  musica.currentTime = 0;
+  musica.muted = false;
+}).catch(()=>{});
+
   } else {
-    tentativas++;
-    const msgs = ["errou 🤨","tem certeza que é minha mãe mesmo?","suspeito...","ok agora fiquei preocupada"];
-    document.getElementById("erro").innerText = msgs[Math.min(tentativas-1, msgs.length-1)];
+    document.getElementById("erro").innerText = "senha errada 😡";
   }
 }
 
-/* CONTADOR */
-function atualizarContador() {
-  const inicio = new Date("2010-01-01");
-  const hoje = new Date();
-  const dias = Math.floor((hoje - inicio) / (1000*60*60*24));
-  document.getElementById("contador").innerText = "sendo sua cria há: " + dias + " dias 💗";
-}
-
-/* VIDEO */
-function abrirVideo() {
-  const box = document.getElementById("videoBox");
-  box.style.display = box.style.display === "block" ? "none" : "block";
-}
-
-/* MENSAGENS */
+/* MENSAGEM */
 function mostrarMsg() {
   const el = document.getElementById("msg2");
-  el.style.display = el.style.display === "block" ? "none" : "block";
-  el.innerText = "mereço um sushizinho pelo esforço, né?";
+  const btn = document.getElementById("btnExtra");
+
+  const visivel = el.style.display === "block";
+
+  el.style.display = visivel ? "none" : "block";
+  btn.style.display = visivel ? "none" : "inline-block";
+
+  if (!visivel) {
+    el.innerText = "mereço um sushizinho pelo esforço, né?";
+  }
 }
 
-function mensagemSeria() {
-  const el = document.getElementById("msgSeria");
-  el.style.display = el.style.display === "block" ? "none" : "block";
-}
-
-function ultima() {
-  document.getElementById("final").style.display = "block";
-}
-
-/* MODAL */
+/* ABRIR MODAL */
 function abrir() {
   document.getElementById("modal").style.display = "flex";
 
@@ -283,19 +331,24 @@ function abrir() {
   musica.play().catch(()=>{});
 
   pausado = false;
+  atualizarStatus();
 
   iniciarTimer();
 
   clearInterval(autoPlay);
-  autoPlay = setInterval(() => {
-    if (!pausado) avancar();
-  }, 5000);
+ autoPlay = setInterval(() => {
+  if (!pausado) {
+    avancar();
+  }
+}, 5000);
 
   atualizar();
 }
 
+/* FECHAR */
 function fechar() {
   document.getElementById("modal").style.display = "none";
+
   clearInterval(autoPlay);
   clearInterval(timerInterval);
 }
@@ -305,10 +358,7 @@ function atualizar() {
   const carrossel = document.getElementById("carrossel");
   carrossel.style.transform = `translateX(${-index * 100}%)`;
 
-  document.querySelectorAll(".foto").forEach(f => f.classList.remove("ativa"));
-  document.querySelectorAll(".foto")[index].classList.add("ativa");
-
-  criarDots();
+  setTimeout(ativarTexto, 300);
 }
 
 function avancar() {
@@ -323,35 +373,30 @@ function voltar() {
   atualizar();
 }
 
-/* DOTS */
-function criarDots() {
-  const total = document.querySelectorAll(".foto").length;
-  const dots = document.getElementById("dots");
-  dots.innerHTML = "";
-
-  for (let i = 0; i < total; i++) {
-    const dot = document.createElement("span");
-    dot.style.display = "inline-block";
-    dot.style.width = "8px";
-    dot.style.height = "8px";
-    dot.style.margin = "4px";
-    dot.style.borderRadius = "50%";
-    dot.style.background = i === index ? "#ff4da6" : "#555";
-
-    dot.onclick = () => {
-      index = i;
-      atualizar();
-    };
-
-    dots.appendChild(dot);
+/* TEXTO */
+function escrever(el, text, i = 0) {
+  el.innerHTML = "";
+  function loop() {
+    if (i < text.length) {
+      el.innerHTML += text[i++];
+      setTimeout(loop, 30);
+    }
   }
+  loop();
+}
+
+function ativarTexto() {
+  const fotos = document.querySelectorAll(".foto");
+  const atual = fotos[index];
+  const desc = atual.querySelector(".descricao");
+  escrever(desc, desc.getAttribute("data-text"));
 }
 
 /* TIMER */
 function iniciarTimer() {
   tempo = 0;
-  clearInterval(timerInterval);
 
+  clearInterval(timerInterval);
   timerInterval = setInterval(() => {
     if (!pausado) {
       tempo++;
@@ -360,15 +405,53 @@ function iniciarTimer() {
   }, 1000);
 }
 
+/* STATUS */
+function atualizarStatus() {
+  const status = document.getElementById("status");
+  const carrossel = document.getElementById("carrossel");
+
+  if (pausado) {
+    status.innerText = "⏸ PAUSED";
+    carrossel.classList.add("paused");
+  } else {
+    status.innerText = "▶ PLAYING";
+    carrossel.classList.remove("paused");
+  }
+}
+
 /* PAUSE */
 function togglePause() {
+  const sound = document.getElementById("camera-sound");
+  const musica = document.getElementById("musica");
+
+  sound.currentTime = 0;
+sound.volume = 1;
+sound.play().catch(()=>{});
+
   pausado = !pausado;
+
+  if (pausado) {
+    musica.pause();
+  } else {
+    musica.play().catch(()=>{});
+  }
+
+  atualizarStatus();
 }
 
 /* CLICK */
-document.getElementById("modal").addEventListener("click", (e) => {
-  if (!e.target.classList.contains("seta") &&
-      !e.target.classList.contains("fechar")) {
+window.addEventListener("load", () => {
+  document.getElementById("modal").addEventListener("click", (e) => {
+    if (!e.target.classList.contains("seta") && 
+        !e.target.classList.contains("fechar")) {
+      togglePause();
+    }
+  });
+});
+/* TECLA ESPAÇO */
+document.addEventListener("keydown", (e) => {
+  if (e.code === "Space") {
+    e.preventDefault();
     togglePause();
   }
 });
