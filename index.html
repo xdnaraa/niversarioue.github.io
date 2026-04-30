@@ -1,81 +1,135 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>diário</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>error</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0f0f0f;
+      color: #eaeaea;
+      font-family: Arial, sans-serif;
+      flex-direction: column;
+      overflow: hidden;
+    }
 
-<style>
-  body {
-    margin: 0;
-    background: #0f0f0f;
-    color: #eaeaea;
-    font-family: Arial;
-    overflow: hidden;
-  }
+    .card {
+      text-align: center;
+      padding: 24px;
+      max-width: 500px;
+    }
 
-  .container {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-  }
+    h1 {
+      font-size: 22px;
+      font-weight: normal;
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
 
-  .foto {
-    width: 200px;
-    height: 200px;
-    background: url('https://via.placeholder.com/200') center/cover;
-    filter: grayscale(80%);
-    cursor: pointer;
-  }
+    button {
+      margin: 6px;
+      padding: 10px 14px;
+      border: 1px solid #333;
+      background: transparent;
+      color: #eaeaea;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: 0.2s;
+    }
 
-  .texto {
-    margin-top: 20px;
-    opacity: 0.8;
-  }
+    button:hover {
+      background: #1a1a1a;
+    }
 
-  /* hotspot invisível */
-  .segredo {
-    position: absolute;
-    top: 30%;
-    left: 60%;
-    width: 80px;
-    height: 80px;
-    cursor: pointer;
-  }
+    #subtext {
+      margin-top: 18px;
+      font-size: 14px;
+      opacity: 0.7;
+      min-height: 20px;
+    }
 
-  .hidden {
-    display: none;
-  }
-
-</style>
+    .tiny-button {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #eaeaea;
+      opacity: 0.05;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
-  <div class="foto" onclick="revelar()"></div>
-  <div class="texto">não tem nada aqui. sério.</div>
-</div>
+  <div class="card">
+    <h1 id="title">você tá aqui de novo.</h1>
 
-<div class="segredo" onclick="abrirSegredo()"></div>
+    <button onclick="answer('sim')">sim</button>
+    <button onclick="answer('não')">não</button>
+    <button onclick="answer('talvez')">talvez</button>
 
-<div id="arquivo" class="hidden">
-  <h2>VOCÊ NÃO ERA PRA TER CHEGADO AQUI</h2>
-  <p>30/04 — registro corrompido</p>
-</div>
+    <div id="subtext"></div>
+  </div>
 
-<script>
-function revelar() {
-  document.body.style.background = "#000";
-  alert("algo mudou.");
-}
+  <div class="tiny-button" id="secret" onclick="secretClick()"></div>
 
-function abrirSegredo() {
-  document.getElementById("arquivo").classList.remove("hidden");
-}
-</script>
+  <script>
+    let state = 0;
+
+    const phrases = [
+      "isso não leva a lugar nenhum.",
+      "parabéns.",
+      "você ainda tá aqui.",
+      "ok.",
+      "interessante escolha.",
+      "isso foi previsível.",
+      "você sempre volta."
+    ];
+
+    function answer(type) {
+      const title = document.getElementById("title");
+      const sub = document.getElementById("subtext");
+
+      state++;
+
+      if (type === "sim") {
+        title.textContent = "eu sabia.";
+      } else if (type === "não") {
+        title.textContent = "mentiroso.";
+      } else {
+        title.textContent = "indecisão detectada.";
+      }
+
+      sub.textContent = phrases[state % phrases.length];
+      moveSecret();
+    }
+
+    function secretClick() {
+      const sub = document.getElementById("subtext");
+      sub.textContent = "você achou isso rápido demais.";
+      moveSecret();
+    }
+
+    function moveSecret() {
+      const secret = document.getElementById("secret");
+      secret.style.top = Math.random() * 90 + "vh";
+      secret.style.left = Math.random() * 90 + "vw";
+    }
+
+    setInterval(() => {
+      const sub = document.getElementById("subtext");
+      if (Math.random() > 0.7) {
+        sub.textContent = "você ainda tá pensando nisso.";
+      }
+    }, 5000);
+
+    moveSecret();
+  </script>
 
 </body>
 </html>
