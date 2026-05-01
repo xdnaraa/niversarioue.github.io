@@ -1,135 +1,158 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>error</title>
+  <title>Elio Varga</title>
   <style>
     body {
       margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b0b0b;
+      color: #eaeaea;
+      overflow-x: hidden;
+    }
+
+    .center {
       height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
-      background: #0f0f0f;
-      color: #eaeaea;
-      font-family: Arial, sans-serif;
+      align-items: center;
       flex-direction: column;
-      overflow: hidden;
-    }
-
-    .card {
       text-align: center;
-      padding: 24px;
-      max-width: 500px;
-    }
-
-    h1 {
-      font-size: 22px;
-      font-weight: normal;
-      margin-bottom: 20px;
-      opacity: 0.9;
+      padding: 20px;
     }
 
     button {
-      margin: 6px;
-      padding: 10px 14px;
-      border: 1px solid #333;
+      margin-top: 20px;
+      padding: 10px 18px;
       background: transparent;
-      color: #eaeaea;
+      border: 1px solid #fff;
+      color: white;
       cursor: pointer;
-      border-radius: 8px;
       transition: 0.2s;
     }
 
     button:hover {
-      background: #1a1a1a;
+      transform: scale(1.05);
     }
 
-    #subtext {
-      margin-top: 18px;
-      font-size: 14px;
-      opacity: 0.7;
-      min-height: 20px;
+    .hidden {
+      display: none;
     }
 
-    .tiny-button {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      background: #eaeaea;
-      opacity: 0.05;
-      border-radius: 50%;
-      cursor: pointer;
+    .topbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px;
+      background: rgba(0,0,0,0.7);
     }
+
+    .section {
+      padding: 80px 20px;
+      min-height: 100vh;
+    }
+
+    .gallery img {
+      width: 200px;
+      margin: 10px;
+      opacity: 0.8;
+      filter: grayscale(100%);
+    }
+
+    .glitch {
+      animation: flicker 3s infinite;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 1; }
+      50% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+
+    .secret {
+      color: black;
+      user-select: none;
+    }
+
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h1 id="title">você tá aqui de novo.</h1>
+<div id="home" class="center">
+  <h1 class="glitch">você encontrou isso tarde demais.</h1>
+  <button onclick="enterSite()">continuar</button>
+</div>
 
-    <button onclick="answer('sim')">sim</button>
-    <button onclick="answer('não')">não</button>
-    <button onclick="answer('talvez')">talvez</button>
+<div id="site" class="hidden">
 
-    <div id="subtext"></div>
+  <div class="topbar">
+    <div onclick="showSection('gallery')">memórias</div>
+    <div onclick="showSection('music')">sons</div>
+    <div onclick="showSection('diary')">diário</div>
   </div>
 
-  <div class="tiny-button" id="secret" onclick="secretClick()"></div>
+  <div id="gallery" class="section hidden">
+    <h2>memórias</h2>
+    <div class="gallery">
+      <img src="https://picsum.photos/200?random=1" />
+      <img src="https://picsum.photos/200?random=2" />
+      <img src="https://picsum.photos/200?random=3" />
+      <img src="https://picsum.photos/200?random=4" />
+    </div>
+  </div>
 
-  <script>
-    let state = 0;
+  <div id="music" class="section hidden">
+    <h2>sons dele</h2>
+    <p>playlist não disponível</p>
+    <p class="glitch">faixa: não escute isso</p>
+  </div>
 
-    const phrases = [
-      "isso não leva a lugar nenhum.",
-      "parabéns.",
-      "você ainda tá aqui.",
-      "ok.",
-      "interessante escolha.",
-      "isso foi previsível.",
-      "você sempre volta."
-    ];
+  <div id="diary" class="section hidden">
+    <h2>diário</h2>
+    <p>hoje eu acordei antes de existir</p>
+    <p>se alguém ler isso, já é tarde</p>
+    <p id="glitchText">eu não lembro se isso é meu</p>
+  </div>
 
-    function answer(type) {
-      const title = document.getElementById("title");
-      const sub = document.getElementById("subtext");
+  <div class="section">
+    <p class="secret" onclick="secret()">.</p>
+  </div>
 
-      state++;
+</div>
 
-      if (type === "sim") {
-        title.textContent = "eu sabia.";
-      } else if (type === "não") {
-        title.textContent = "mentiroso.";
-      } else {
-        title.textContent = "indecisão detectada.";
-      }
+<script>
 
-      sub.textContent = phrases[state % phrases.length];
-      moveSecret();
-    }
+function enterSite() {
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('site').classList.remove('hidden');
+  showSection('gallery');
+}
 
-    function secretClick() {
-      const sub = document.getElementById("subtext");
-      sub.textContent = "você achou isso rápido demais.";
-      moveSecret();
-    }
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
 
-    function moveSecret() {
-      const secret = document.getElementById("secret");
-      secret.style.top = Math.random() * 90 + "vh";
-      secret.style.left = Math.random() * 90 + "vw";
-    }
+function secret() {
+  alert('ele ainda está aqui?');
+  document.body.style.background = '#000';
+  document.getElementById('glitchText').innerText = 'você não deveria ver isso';
+}
 
-    setInterval(() => {
-      const sub = document.getElementById("subtext");
-      if (Math.random() > 0.7) {
-        sub.textContent = "você ainda tá pensando nisso.";
-      }
-    }, 5000);
+setInterval(() => {
+  const texts = [
+    'eu não lembro se isso é meu',
+    'ou é?',
+    'alguém está olhando isso'
+  ];
+  document.getElementById('glitchText').innerText = texts[Math.floor(Math.random()*texts.length)];
+}, 5000);
 
-    moveSecret();
-  </script>
+</script>
 
 </body>
 </html>
