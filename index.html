@@ -35,81 +35,114 @@
 
     button:hover {
       transform: scale(1.05);
+      background: rgba(255,255,255,0.08);
     }
 
-    .hidden {
-      display: none;
-    }
+    .hidden { display: none; }
 
+    /* TOPBAR estilo botões reais */
     .topbar {
       position: fixed;
       top: 0;
       width: 100%;
       display: flex;
-      justify-content: space-around;
-      padding: 10px;
-      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      gap: 30px;
+      padding: 12px;
+      background: rgba(0,0,0,0.75);
       z-index: 10;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
 
     .topbar div {
       cursor: pointer;
-      opacity: 0.7;
+      opacity: 0.6;
       transition: 0.2s;
+      user-select: none;
+      padding: 6px 12px;
+      border-radius: 6px;
     }
 
     .topbar div:hover {
       opacity: 1;
-      transform: scale(1.1);
+      transform: scale(1.08);
+      background: rgba(255,255,255,0.06);
     }
 
     .section {
-      padding: 80px 20px;
+      padding: 90px 20px;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    /* SOCIAL FEED */
+    /* FEED mais rede social mesmo */
+    .feed {
+      width: 100%;
+      max-width: 520px;
+    }
+
     .post {
-      border: 1px solid #333;
-      padding: 15px;
-      margin-bottom: 20px;
-      max-width: 500px;
-      background: rgba(255,255,255,0.02);
+      border: 1px solid #2a2a2a;
+      padding: 14px;
+      margin-bottom: 18px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .post:hover {
+      background: rgba(255,255,255,0.05);
+      transform: scale(1.01);
     }
 
     .post-header {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .avatar {
-      width: 35px;
-      height: 35px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
-      background: #555;
+      background: #666;
     }
 
     .username {
       font-weight: bold;
+      font-size: 14px;
+    }
+
+    .handle {
+      font-size: 11px;
+      opacity: 0.5;
     }
 
     .date {
-      font-size: 12px;
+      font-size: 11px;
       opacity: 0.6;
+    }
+
+    .post-text {
+      margin: 8px 0;
+      font-size: 14px;
     }
 
     .post img {
       width: 100%;
-      margin-top: 10px;
+      margin-top: 8px;
       opacity: 0.9;
+      border-radius: 6px;
     }
 
     .comments {
-      margin-top: 10px;
-      font-size: 13px;
-      opacity: 0.8;
+      margin-top: 8px;
+      font-size: 12px;
+      opacity: 0.7;
     }
 
     .glitch {
@@ -120,11 +153,6 @@
       0% { opacity: 1; }
       50% { opacity: 0.6; }
       100% { opacity: 1; }
-    }
-
-    .secret {
-      color: black;
-      user-select: none;
     }
 
   </style>
@@ -144,49 +172,54 @@
     <div onclick="showSection('diary')">diário</div>
   </div>
 
-  <!-- SOCIAL FEED -->
   <div id="gallery" class="section hidden">
     <h2>memórias</h2>
 
-    <div class="post">
-      <div class="post-header">
-        <div class="avatar"></div>
-        <div>
-          <div class="username">elio.varga</div>
-          <div class="date">03/11/2024</div>
-        </div>
-      </div>
-      <div>acho que hoje foi um dia normal.</div>
-      <img src="https://picsum.photos/500?random=11" />
-      <div class="comments">3 comentários</div>
-    </div>
+    <div class="feed">
 
-    <div class="post">
-      <div class="post-header">
-        <div class="avatar"></div>
-        <div>
-          <div class="username">elio.varga</div>
-          <div class="date">10/11/2024</div>
+      <div class="post">
+        <div class="post-header">
+          <div class="avatar"></div>
+          <div>
+            <div class="username">Elio Varga</div>
+            <div class="handle">@elio.varga</div>
+            <div class="date">03/11/2024</div>
+          </div>
         </div>
+        <div class="post-text">acho que hoje foi um dia normal.</div>
+        <img src="https://picsum.photos/500?random=11" />
+        <div class="comments">3 comentários</div>
       </div>
-      <div>não lembro de tirar essa foto.</div>
-      <img src="https://picsum.photos/500?random=22" />
-      <div class="comments">0 comentários</div>
-    </div>
 
-    <div class="post">
-      <div class="post-header">
-        <div class="avatar"></div>
-        <div>
-          <div class="username">elio.varga</div>
-          <div class="date">??/??/????</div>
+      <div class="post">
+        <div class="post-header">
+          <div class="avatar"></div>
+          <div>
+            <div class="username">Elio Varga</div>
+            <div class="handle">@elio.varga</div>
+            <div class="date">10/11/2024</div>
+          </div>
         </div>
+        <div class="post-text">não lembro de tirar essa foto.</div>
+        <img src="https://picsum.photos/500?random=22" />
+        <div class="comments">0 comentários</div>
       </div>
-      <div>isso não era pra existir.</div>
-      <img src="https://picsum.photos/500?random=33" />
-      <div class="comments">comentários desativados</div>
-    </div>
 
+      <div class="post">
+        <div class="post-header">
+          <div class="avatar"></div>
+          <div>
+            <div class="username">Elio Varga</div>
+            <div class="handle">@elio.varga</div>
+            <div class="date">??/??/????</div>
+          </div>
+        </div>
+        <div class="post-text">isso não era pra existir.</div>
+        <img src="https://picsum.photos/500?random=33" />
+        <div class="comments">comentários desativados</div>
+      </div>
+
+    </div>
   </div>
 
   <div id="music" class="section hidden">
@@ -199,17 +232,12 @@
     <h2>diário</h2>
     <p>hoje eu acordei antes de existir</p>
     <p>se alguém ler isso, já é tarde</p>
-    <p id="glitchText">eu não lembro se isso é meu</p>
-  </div>
-
-  <div class="section">
-    <p class="secret" onclick="secret()">.</p>
+    <p>eu não lembro se isso é meu</p>
   </div>
 
 </div>
 
 <script>
-
 function enterSite() {
   document.getElementById('home').style.display = 'none';
   document.getElementById('site').classList.remove('hidden');
@@ -220,22 +248,6 @@ function showSection(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
 }
-
-function secret() {
-  alert('ele ainda está aqui?');
-  document.body.style.background = '#000';
-  document.getElementById('glitchText').innerText = 'você não deveria ver isso';
-}
-
-setInterval(() => {
-  const texts = [
-    'eu não lembro se isso é meu',
-    'ou é?',
-    'alguém está olhando isso'
-  ];
-  document.getElementById('glitchText').innerText = texts[Math.floor(Math.random()*texts.length)];
-}, 5000);
-
 </script>
 
 </body>
